@@ -28,11 +28,6 @@ app.use(
   }),
 );
 
-// Кореневий маршрут
-app.get('/', (req, res) => {
-  res.status(200).json({ message: 'Hello world!' });
-});
-
 // маршрут нотаток
 app.get('/notes', (req, res) => {
   res.status(200).json({
@@ -58,10 +53,10 @@ app.use((req, res) => {
 });
 
 // Middleware для обробки помилок (останнє)
-app.use((err, res) => {
+app.use((err, req, res, next) => {
   console.error('Error:', err.message);
   res.status(500).json({
-    message: 'Simulated server error',
+    message: err.message,
   });
 });
 
