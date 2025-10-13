@@ -1,6 +1,8 @@
 // src/server.js
 import express from 'express';
 import cors from 'cors';
+// Імпортуємо middleware
+import { errors } from 'celebrate';
 import 'dotenv/config';
 import { connectMongoDB } from './db/connectMongoDB.js'; // Підключення до MongoDB
 import { errorHandler } from './middleware/errorHandler.js';
@@ -27,6 +29,9 @@ app.get('/test-error', () => {
 
 // Middleware 404 (після всіх маршрутів)
 app.use(notFoundHandler);
+
+// обробка помилок від celebrate (валідація)
+app.use(errors());
 
 // Middleware для обробки помилок (останнє)
 app.use(errorHandler);
