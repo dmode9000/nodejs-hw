@@ -9,6 +9,9 @@ export const getAllNotes = async (req, res) => {
   // create base query, to which will add filters
   const notesQuery = Note.find();
 
+  // filter notes by the authenticated user
+  notesQuery.where('userId').equals(req.user._id);
+
   // text index search if search exists
   if (search) {
     notesQuery.where({
@@ -41,7 +44,10 @@ export const getAllNotes = async (req, res) => {
 
 export const getNoteById = async (req, res, next) => {
   const { noteId } = req.params;
-  const note = await Note.findById(noteId);
+  const note = await Note.findOne({
+    _id: noteId, // find by id
+    userId: req.user._id, // check ownership
+  });
 
   if (!note) {
     next(createHttpError(404, 'Note not found'));
@@ -51,7 +57,7 @@ export const getNoteById = async (req, res, next) => {
 };
 
 export const createNote = async (req, res) => {
-  const note = await Note.create(req.body);
+  const note = await Note.create({ ...req.body, userId: req.user._id });
   res.status(201).json(note);
 };
 
@@ -59,6 +65,7 @@ export const deleteNote = async (req, res, next) => {
   const { noteId } = req.params;
   const note = await Note.findOneAndDelete({
     _id: noteId,
+    userId: req.user._id, // check ownership
   });
 
   if (!note) {
@@ -73,7 +80,7 @@ export const updateNote = async (req, res, next) => {
   const { noteId } = req.params;
 
   const note = await Note.findOneAndUpdate(
-    { _id: noteId }, // Шукаємо по id
+    { _id: noteId, userId: req.user._id }, // Шукаємо по id
     req.body,
     { new: true }, // повертаємо оновлений документ
   );
