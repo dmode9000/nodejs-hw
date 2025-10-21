@@ -16,7 +16,7 @@ const noteSchema = new Schema(
     tag: {
       type: String,
       enum: TAGS,
-      default: TAGS.at(-1),
+      default: 'Todo',
     },
     userId: {
       type: Schema.Types.ObjectId,

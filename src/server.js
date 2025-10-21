@@ -13,7 +13,7 @@ import notesRoutes from './routes/notesRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 
 const app = express();
-const PORT = process.env.PORT ?? 3030;
+const PORT = 3000;
 
 // Global Middleware
 app.use(logger); // Logger first — sees all requests
@@ -24,12 +24,6 @@ app.use(cors()); // Allow requests from other domains
 // Маршрути нотаток
 app.use(authRoutes);
 app.use(notesRoutes);
-
-// Маршрут для тестування middleware помилки
-app.get('/test-error', () => {
-  // Штучна помилка для прикладу
-  throw new Error('Simulated server error');
-});
 
 // Middleware 404 (після всіх маршрутів)
 app.use(notFoundHandler);

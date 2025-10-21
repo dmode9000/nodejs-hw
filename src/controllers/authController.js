@@ -88,7 +88,7 @@ export const logoutUser = async (req, res) => {
   res.status(204).send();
 };
 
-export const refreshSession = async (req, res) => {
+export const refreshUserSession = async (req, res) => {
   // Find the session by ID and refresh token
   const session = await Session.findOne({
     _id: req.cookies.sessionId,
