@@ -13,7 +13,7 @@ import notesRoutes from './routes/notesRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT ?? 3000;
 
 // Global Middleware
 app.use(logger); // Logger first — sees all requests

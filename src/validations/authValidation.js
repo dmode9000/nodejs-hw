@@ -7,8 +7,7 @@ export const registerUserSchema = {
       'any.required': 'Email is a required field',
     }),
     password: Joi.string().min(8).required().messages({
-      'string.min': 'Password must be at least 6 characters long',
-      'string.max': 'Password must be at most 20 characters long',
+      'string.min': 'Password must be at least 8 characters long',
       'any.required': 'Password is a required field',
     }),
   }),
